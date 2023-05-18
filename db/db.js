@@ -27,6 +27,6 @@ async function connectDb() {
 
 module.exports = {
     connectDb,
-    database: client.db("testAssignment"),// ! Replace it later "testAssignment"
+    database: client.db("khelaGor"),
     
 }
