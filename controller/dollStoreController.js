@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const {
   DollStore
 } = require("../Models/dollStore.js");
@@ -21,6 +22,25 @@ const getAllDolls = async (req, res, next)=> {
   }
 }
 
+// get doll by id
+const getDollById = async (req, res)=> {
+  const id = req.params.id;
+  try {
+    const query = {
+      _id:new ObjectId(id)
+    }
+    const doll = await DollStore.findOne( query)
+    res.status(200).json(doll)
+
+  } catch (e) {
+    console.log(e)
+    res.status(500).json( {
+      error: e.message
+    })
+  }
+}
+
+// add doll
 const addDoll = async (req, res)=> {
   const {
     picture,
@@ -57,5 +77,6 @@ const addDoll = async (req, res)=> {
 }
 
 module.exports = {
-  getAllDolls
+  getAllDolls,
+  getDollById
 }

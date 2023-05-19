@@ -1,6 +1,6 @@
 const express = require('express');
 const { testCreate } = require('../controller/testController');
-const { getAllDolls } = require('../controller/dollStoreController');
+const { getAllDolls, getDollById } = require('../controller/dollStoreController');
 const router = express.Router();
 
 // ! Delete it later
@@ -14,6 +14,7 @@ router.route('/test').post(testCreate)
 
 // Doll routes 
 router.route('/dolls').get(getAllDolls)
+router.route('/doll/:id').get(getDollById)
 
 
 
