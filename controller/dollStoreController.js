@@ -16,4 +16,43 @@ const getAllDolls = async (req, res, next)=> {
   }
 }
 
-module.exports = {getAllDolls}
+const addDoll = async (req, res)=> {
+  {
+    picture,
+    name,
+    price,
+    category,
+    subcategory,
+    rating,
+    sellerName,
+    sellerEmail,
+    quantity,
+    details
+  } = req.body;
+  try {
+    /* code */
+    const doll = await DollStore.insertOne( {
+      picture,
+      name,
+      price,
+      category,
+      subcategory,
+      rating,
+      sellerName,
+      sellerEmail,
+      quantity,
+      details
+    })
+
+    res.status(201).json(doll)
+  } catch (e) {
+    console.log(e)
+    res.status(500).json( {
+      error: e.message
+    })
+  }
+}
+
+module.exports = {
+  getAllDolls
+}
