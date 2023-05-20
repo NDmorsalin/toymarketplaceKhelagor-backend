@@ -22,8 +22,8 @@ const getAllDolls = async (req, res, next) => {
 
     const totalDolls = await DollStore.countDocuments()
     const dolls = await DollStore.find(query).limit(limit).skip(skip).toArray()
-    // console.log({ dolls });
-    res.status(200).json({ dolls, totalDolls })
+    // console.log({ search:req.query.search });
+    res.status(200).json({ dolls,  totalDolls: req.query.search ? dolls.length : totalDolls  })
   } catch (e) {
     console.log(e)
     res.status(500).json({
@@ -53,7 +53,7 @@ const getDollById = async (req, res) => {
 // add doll
 const addDoll = async (req, res) => {
   const dollData = req.body;
-  console.log(dollData);
+  // console.log(dollData);
   try {
     /* code */
     const doll = await DollStore.insertOne(dollData)
@@ -67,8 +67,28 @@ const addDoll = async (req, res) => {
   }
 }
 
+// getMyDoll
+const getMyDoll = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 0;
+  const skip = (page - 1) * limit;
+  const email = req.query.email;
+  // console.log({ email, limit });
+  try {
+    const totalDolls = await DollStore.countDocuments()
+    const dolls = await DollStore.find({ 'seller.sellerEmail': email }).limit(limit).skip(skip).toArray()
+    res.status(200).json({ dolls, totalDolls: email ? dolls.length : totalDolls })
+  } catch (e) {
+    console.log(e)
+    res.status(500).json({
+      error: e.message
+    })
+  }
+}
+
 
 module.exports = {
   getAllDolls,
   getDollById, addDoll,
+  getMyDoll
 }
