@@ -23,7 +23,7 @@ const getAllDolls = async (req, res, next) => {
     const totalDolls = await DollStore.countDocuments()
     const dolls = await DollStore.find(query).limit(limit).skip(skip).toArray()
     // console.log({ search:req.query.search });
-    res.status(200).json({ dolls,  totalDolls: req.query.search ? dolls.length : totalDolls  })
+    res.status(200).json({ dolls, totalDolls: req.query.search ? dolls.length : totalDolls })
   } catch (e) {
     console.log(e)
     res.status(500).json({
@@ -86,9 +86,34 @@ const getMyDoll = async (req, res) => {
   }
 }
 
+// update doll
+const updateDoll = async (req, res) => {
+  
+}
+// delete doll
+const deleteDoll = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const query = {
+      _id: new ObjectId(id)
+    }
+    const deletedDoll = await DollStore.findOneAndDelete(query)
+    res.status(200).json(deletedDoll)
+
+  } catch (e) {
+    console.log(e)
+    res.status(500).json({
+      error: e.message
+    })
+  }
+}
+
+
 
 module.exports = {
   getAllDolls,
   getDollById, addDoll,
-  getMyDoll
+  getMyDoll,
+  updateDoll,
+  deleteDoll
 }
