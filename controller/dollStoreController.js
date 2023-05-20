@@ -5,15 +5,24 @@ const {
 
 //get all dolls
 const getAllDolls = async (req, res, next) => {
+  let query = {};
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 0;
+  const nameRegex = new RegExp(req.query.search, 'i');
+
   const skip = (page - 1) * limit;
-  // console.log(page, limit);
+  if (nameRegex) {
+    query = {
+      name: nameRegex
+    }
+  }
+
+
   try {
-    
+
     const totalDolls = await DollStore.countDocuments()
-    const dolls = await DollStore.find({}).limit(limit).skip(skip).toArray()
-    console.log({ dolls, quarry });
+    const dolls = await DollStore.find(query).limit(limit).skip(skip).toArray()
+    // console.log({ dolls });
     res.status(200).json({ dolls, totalDolls })
   } catch (e) {
     console.log(e)
@@ -58,7 +67,8 @@ const addDoll = async (req, res) => {
   }
 }
 
+
 module.exports = {
   getAllDolls,
-  getDollById, addDoll
+  getDollById, addDoll,
 }
