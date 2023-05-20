@@ -95,12 +95,18 @@ const updateDoll = async (req, res) => {
       _id: new ObjectId(id)
     }
 
-    const updatedDoll = await DollStore.findOneAndUpdate(query, {
+    const updatedDoll = await DollStore.updateOne(query, {
       $set: dollData
     }, {
-      returnOriginal: false
+      upsert: true
     })
-    res.status(200).json(updatedDoll)
+    // console.log(updatedDoll);
+    if (updatedDoll.acknowledged) {
+      const updatedValue = await DollStore.findOne(query);
+      res.status(200).json(updatedValue);
+    } else {
+      res.status(404).json({ message: "Doll not found" });
+    }
 
 
   } catch (e) {
