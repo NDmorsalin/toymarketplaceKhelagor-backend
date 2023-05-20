@@ -88,7 +88,27 @@ const getMyDoll = async (req, res) => {
 
 // update doll
 const updateDoll = async (req, res) => {
-  
+  const id = req.params.id;
+  const dollData = req.body;
+  try {
+    const query = {
+      _id: new ObjectId(id)
+    }
+
+    const updatedDoll = await DollStore.findOneAndUpdate(query, {
+      $set: dollData
+    }, {
+      returnOriginal: false
+    })
+    res.status(200).json(updatedDoll)
+
+
+  } catch (e) {
+    console.log(e)
+    res.status(500).json({
+      error: e.message
+    })
+  }
 }
 // delete doll
 const deleteDoll = async (req, res) => {
