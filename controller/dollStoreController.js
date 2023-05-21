@@ -90,6 +90,7 @@ const getMyDoll = async (req, res) => {
 const updateDoll = async (req, res) => {
   const id = req.params.id;
   const dollData = req.body;
+  console.log({id});
   try {
     const query = {
       _id: new ObjectId(id)
