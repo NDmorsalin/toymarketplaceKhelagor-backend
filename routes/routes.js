@@ -22,9 +22,9 @@ router.get('/', (req, res) => {
 
 // Doll routes
 router.route('/dolls').get(getAllDolls)
-router.route('/doll/:id').get(verifyToken, getDollById)
-router.route('/mydolls').get(verifyToken, getMyDoll).post(verifyToken, addDoll)
-router.route('/mydolls/:id').delete(verifyToken, deleteDoll).put(verifyToken,updateDoll)
+router.route('/doll/:id').get(getDollById)
+router.route('/mydolls').get(getMyDoll).post(addDoll)
+router.route('/mydolls/:id').delete(deleteDoll).put(updateDoll)
 
 // create jwt
 router.route('/token').post(createToken)

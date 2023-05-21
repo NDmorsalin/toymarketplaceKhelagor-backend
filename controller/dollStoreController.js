@@ -9,7 +9,6 @@ const getAllDolls = async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 0;
   const nameRegex = new RegExp(req.query.search, 'i');
-console.log(req.email,'all boll')
   const skip = (page - 1) * limit;
   if (nameRegex) {
     query = {

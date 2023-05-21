@@ -16,8 +16,7 @@ const createToken = async (req, res, next) => {
       httpOnly: true,
       expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // 3 days
     });
-    
-    res.status(201).json( {
+    res.status(201).json({
       message: 'jwt ',
       token
     });
