@@ -10,6 +10,15 @@ const getAllDolls = async (req, res, next) => {
   const limit = parseInt(req.query.limit) || 0;
   const nameRegex = new RegExp(req.query.search, 'i');
   const skip = (page - 1) * limit;
+  let sort = {}
+  if (req.query.sort === 'asc') {
+    sort = { price: 1 }
+  }
+  if (req.query.sort === 'desc') {
+    sort = { price: -1 }
+  }
+  console.log({ sort });
+
   if (nameRegex) {
     query = {
       name: nameRegex
@@ -20,7 +29,8 @@ const getAllDolls = async (req, res, next) => {
   try {
 
     const totalDolls = await DollStore.countDocuments()
-    const dolls = await DollStore.find(query).limit(limit).skip(skip).toArray()
+    // const dolls = await DollStore.find(query).limit(limit).skip(skip).sort(sort).collation({ numericOrdering: true }).toArray()
+    const dolls = await DollStore.find(query).limit(limit).skip(skip).sort(sort).toArray()
     // console.log({ search:req.query.search });
     res.status(200).json({ dolls, totalDolls: req.query.search ? dolls.length : totalDolls })
   } catch (e) {
@@ -72,10 +82,18 @@ const getMyDoll = async (req, res) => {
   const limit = parseInt(req.query.limit) || 0;
   const skip = (page - 1) * limit;
   const email = req.query.email;
-  // console.log({ email, limit });
+  let sort = {}
+  if (req.query.sort === 'asc') {
+    sort = { price: 1 }
+  }
+  if (req.query.sort === 'desc') {
+    sort = { price: -1 }
+  }
+  console.log({ sort });
   try {
     const totalDolls = await DollStore.countDocuments()
-    const dolls = await DollStore.find({ 'seller.sellerEmail': email }).limit(limit).skip(skip).toArray()
+    // const dolls = await DollStore.find({ 'seller.sellerEmail': email }).limit(limit).skip(skip).sort(sort).collation({ numericOrdering: true }).toArray()
+    const dolls = await DollStore.find({ 'seller.sellerEmail': email }).limit(limit).skip(skip).sort(sort).toArray()
     res.status(200).json({ dolls, totalDolls: email ? dolls.length : totalDolls })
   } catch (e) {
     console.log(e)
@@ -89,7 +107,7 @@ const getMyDoll = async (req, res) => {
 const updateDoll = async (req, res) => {
   const id = req.params.id;
   const dollData = req.body;
-  console.log({id});
+  console.log({ id });
   try {
     const query = {
       _id: new ObjectId(id)
