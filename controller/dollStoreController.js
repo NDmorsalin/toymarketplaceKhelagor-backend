@@ -61,11 +61,12 @@ const getDollById = async (req, res) => {
 
 // add doll
 const addDoll = async (req, res) => {
+  console.log({loggedInUser:req.email});
+
   const dollData = req.body;
-  // console.log(dollData);
   try {
     /* code */
-    const doll = await DollStore.insertOne(dollData)
+    const doll = await DollStore.insertOne({...dollData,price:parseInt(dollData.price),quantity:parseInt(dollData.quantity),rating:parseInt(dollData.rating)})
 
     res.status(201).json(doll)
   } catch (e) {
@@ -78,6 +79,8 @@ const addDoll = async (req, res) => {
 
 // getMyDoll
 const getMyDoll = async (req, res) => {
+  console.log({loggedInUser:req.email});
+
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 0;
   const skip = (page - 1) * limit;
@@ -107,7 +110,8 @@ const getMyDoll = async (req, res) => {
 const updateDoll = async (req, res) => {
   const id = req.params.id;
   const dollData = req.body;
-  console.log({ id });
+  // console.dir(req.cookies);
+  console.log({loggedInUser:req.email});
   try {
     const query = {
       _id: new ObjectId(id)

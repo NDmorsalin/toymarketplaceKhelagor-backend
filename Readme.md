@@ -7,17 +7,20 @@ This repository contains the backend code for the [KhelaGor](https://khelagor-16
 To set up the backend locally, follow these steps:
 
 1. Clone the repository to your local machine:
+
    ```
    git clone git@github.com:programming-hero-web-course-4/b7a11-toy-marketplace-server-side-NDmorsalin.git
    ```
 
 2. Install the necessary dependencies:
+
    ```
    cd b7a11-toy-marketplace-server-side-NDmorsalin
    npm install
    ```
 
 3. Set up the database:
+
    - Create a MongoDB database instance and obtain the connection URL.
    - Rename the `.env.example` file to `.env` and update the `MONGODB_URI` variable with your database connection URL.
 
@@ -58,6 +61,7 @@ To deploy an Express.js application on Vercel, you can follow these steps:
 1. Create an account on Vercel: Visit the Vercel website (https://vercel.com/) and create an account if you don't have one already.
 
 2. Install Vercel CLI: Install the Vercel CLI globally by running the following command in your terminal:
+
    ```
    npm install -g vercel
    ```
@@ -65,43 +69,40 @@ To deploy an Express.js application on Vercel, you can follow these steps:
 3. Build your Express.js application: Make sure your Express.js application is ready for deployment. Ensure that you have a `package.json` file with the necessary dependencies and a `start` script to run your application.
 
 4. Configure the deployment settings: Create a `vercel.json` file in the root directory of your project and add the following configuration:
+
    ```json
    {
-    "version": 2,
-    "builds": [
-        {
-            "src": "./index.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/",
-            "methods": [
-                "GET",
-                "POST",
-                "PUT",
-                "PATCH",
-                "DELETE",
-                "OPTIONS"
-            ]
-        }
-    ]
-}
+     "version": 2,
+     "builds": [
+       {
+         "src": "./index.js",
+         "use": "@vercel/node"
+       }
+     ],
+     "routes": [
+       {
+         "src": "/(.*)",
+         "dest": "/",
+         "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+       }
+     ]
+   }
    ```
 
 5. Test your application locally: Run your Express.js application locally to ensure it's working as expected by executing the command:
+
    ```
    npm start
    ```
 
 6. Login to Vercel CLI: Run the following command to authenticate with Vercel CLI and link your account:
+
    ```
    vercel login
    ```
 
 7. Deploy your application: Run the deployment command to deploy your Express.js application to Vercel:
+
    ```
    vercel
    ```
