@@ -9,13 +9,13 @@ To set up the backend locally, follow these steps:
 1. Clone the repository to your local machine:
 
    ```
-   git clone git@github.com:programming-hero-web-course-4/b7a11-toy-marketplace-server-side-NDmorsalin.git
+   git clone git@github.com:NDmorsalin/toymarketplaceKhelagor-backend.git
    ```
 
 2. Install the necessary dependencies:
 
    ```
-   cd b7a11-toy-marketplace-server-side-NDmorsalin
+   cd toymarketplaceKhelagor-backend
    npm install
    ```
 
